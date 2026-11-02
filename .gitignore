@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Video output & test files
+*_clips/
+*.mp4
+*.mkv
+*.mov
+*.avi
+*.webm
+!test_assets/*
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
