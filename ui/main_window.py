@@ -316,6 +316,12 @@ class MainWindow(QMainWindow):
         self.combo_mode.addItem("⚡ Lossless (Zero Quality Loss, Instant Stream-Copy)", "lossless")
         self.combo_mode.addItem("🎯 Frame Accurate (Visually Lossless Re-encode)", "accurate")
 
+        lbl_naming = QLabel("File Naming:")
+        lbl_naming.setStyleSheet("font-weight: 600; color: #cbd5e1;")
+        self.combo_naming = QComboBox()
+        self.combo_naming.addItem("🔢 001, 002, 003... (Numbered from start)", "number_only")
+        self.combo_naming.addItem("🏷️ <name>_001, <name>_002... (Include Video Name)", "prefix_number")
+
         lbl_dest = QLabel("Output Folder:")
         lbl_dest.setStyleSheet("font-weight: 600; color: #cbd5e1;")
 
@@ -329,8 +335,10 @@ class MainWindow(QMainWindow):
 
         grid.addWidget(lbl_mode, 0, 0)
         grid.addWidget(self.combo_mode, 0, 1)
-        grid.addWidget(lbl_dest, 1, 0)
-        grid.addLayout(dest_row, 1, 1)
+        grid.addWidget(lbl_naming, 1, 0)
+        grid.addWidget(self.combo_naming, 1, 1)
+        grid.addWidget(lbl_dest, 2, 0)
+        grid.addLayout(dest_row, 2, 1)
 
         layout.addLayout(grid)
 
@@ -505,6 +513,7 @@ class MainWindow(QMainWindow):
 
         out_dir = self.txt_dest.text().strip() or None
         mode = self.combo_mode.currentData()
+        naming_format = self.combo_naming.currentData()
 
         # UI state during processing
         self.btn_split.setEnabled(False)
@@ -521,7 +530,8 @@ class MainWindow(QMainWindow):
             output_dir=out_dir,
             segment_duration_sec=segment_sec,
             num_parts=num_parts,
-            mode=mode
+            mode=mode,
+            naming_format=naming_format
         )
         self.split_worker.progress.connect(self._on_split_progress)
         self.split_worker.finished.connect(self._on_split_finished)

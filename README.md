@@ -17,6 +17,7 @@ Traditional video editors decompress and re-encode video frames, which degrades 
 
 ## ✨ Features
 
+- 🔢 **Clean Sequential Naming**: Clips are neatly named right from the start (`001.mp4`, `002.mp4`, `003.mp4`...) for effortless sorting, batch uploading, and playlist ordering.
 - 🎯 **Preset Durations**: 1-click presets for **30s** (Reels/Shorts teasers), **60s (1 min)** (Standard YouTube Shorts / TikTok), **90s**, **2 min**, **3 min**, **5 min**.
 - ⏱️ **Custom Durations**: Split by custom seconds or minutes (e.g. `45s`, `1.5m`, `75s`, `01:30`).
 - 🔢 **Split into N Equal Parts**: Divide any long video evenly into 2, 4, 10, or more parts.

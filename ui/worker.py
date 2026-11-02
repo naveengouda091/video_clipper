@@ -36,7 +36,8 @@ class VideoSplitWorker(QThread):
         segment_duration_sec: Optional[float] = None,
         num_parts: Optional[int] = None,
         mode: str = "lossless",
-        prefix: Optional[str] = None
+        prefix: Optional[str] = None,
+        naming_format: str = "number_only"
     ):
         super().__init__()
         self.input_file = input_file
@@ -45,6 +46,7 @@ class VideoSplitWorker(QThread):
         self.num_parts = num_parts
         self.mode = mode
         self.prefix = prefix
+        self.naming_format = naming_format
         self.splitter = VideoSplitter()
 
     def cancel(self):
@@ -59,6 +61,7 @@ class VideoSplitWorker(QThread):
                 num_parts=self.num_parts,
                 mode=self.mode,
                 prefix=self.prefix,
+                naming_format=self.naming_format,
                 progress_cb=lambda p: self.progress.emit(p)
             )
             if self.splitter._cancel_requested:

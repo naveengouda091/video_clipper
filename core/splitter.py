@@ -104,6 +104,7 @@ class VideoSplitter:
         custom_ranges: Optional[List[Tuple[float, float]]] = None,
         mode: str = "lossless",  # "lossless" or "accurate"
         prefix: Optional[str] = None,
+        naming_format: str = "number_only",  # "number_only" (001, 002...) or "prefix_number" (name_001...)
         progress_cb: Optional[Callable[[SplitProgress], None]] = None
     ) -> List[str]:
         """
@@ -116,7 +117,8 @@ class VideoSplitter:
         :param custom_ranges: Optional list of explicit [(start_sec, end_sec), ...] ranges
         :param mode: "lossless" (stream copy, 100% original quality, ultra-fast) or
                      "accurate" (frame-exact visually lossless re-encode)
-        :param prefix: Output filename prefix (defaults to sanitized input filename)
+        :param prefix: Optional output filename prefix
+        :param naming_format: "number_only" (e.g. 001.mp4, 002.mp4) or "prefix_number" (e.g. video_001.mp4)
         :param progress_cb: Optional callback receiving SplitProgress objects
         :return: List of generated output file paths
         """
@@ -154,7 +156,10 @@ class VideoSplitter:
                     break
 
             part_num_str = f"{idx:03d}"
-            part_filename = f"{clean_base}_part_{part_num_str}{ext}"
+            if naming_format == "prefix_number" or (prefix and naming_format != "number_only"):
+                part_filename = f"{clean_base}_{part_num_str}{ext}"
+            else:
+                part_filename = f"{part_num_str}{ext}"
             part_path = os.path.join(output_dir, part_filename)
 
             # Format start & duration for ffmpeg

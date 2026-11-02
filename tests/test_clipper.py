@@ -78,6 +78,12 @@ class TestClipper(unittest.TestCase):
             mode="lossless"
         )
         self.assertEqual(len(clips), 4)
+        # Verify filenames start with 001, 002, 003, 004
+        self.assertEqual(os.path.basename(clips[0]), "001.mp4")
+        self.assertEqual(os.path.basename(clips[1]), "002.mp4")
+        self.assertEqual(os.path.basename(clips[2]), "003.mp4")
+        self.assertEqual(os.path.basename(clips[3]), "004.mp4")
+
         for clip in clips:
             self.assertTrue(os.path.isfile(clip))
             self.assertGreater(os.path.getsize(clip), 0)

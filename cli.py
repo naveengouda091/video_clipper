@@ -84,9 +84,15 @@ Examples:
         help="Cutting mode: 'lossless' (zero quality loss, instant) or 'accurate' (frame-exact re-encode)"
     )
     parser.add_argument(
+        "--naming",
+        choices=["number", "prefix"],
+        default="number",
+        help="Naming pattern: 'number' (001.mp4, 002.mp4... [default]) or 'prefix' (video_001.mp4...)"
+    )
+    parser.add_argument(
         "--prefix",
         default=None,
-        help="Custom prefix for output filenames"
+        help="Custom prefix for output filenames (overrides number-only naming)"
     )
     parser.add_argument(
         "--info",
@@ -157,6 +163,7 @@ Examples:
             num_parts=args.parts,
             mode=args.mode,
             prefix=args.prefix,
+            naming_format="number_only" if args.naming == "number" and not args.prefix else "prefix_number",
             progress_cb=on_progress
         )
         print("\n")
